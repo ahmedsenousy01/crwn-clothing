@@ -1,14 +1,6 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import CollectionItem from '../../components/collection-item/collection-item.component';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
-
-import {
-	selectCollection,
-	selectCollectionsFetched
-} from '../../redux/shop/shop.selectors';
 
 import {
 	CollectionPageContainer,
@@ -16,16 +8,13 @@ import {
 	CollectionItemsContainer,
 } from './collection.styles';
 
-const CollectionPage = ({ fetchCollectionsStartAsync }) => {
-	const { collectionId } = useParams();
-	const collection = useSelector(selectCollection(collectionId));
-	const isCollectionFetching = !(useSelector(selectCollectionsFetched));
+const CollectionPage = ({ fetchCollections, collection, isCollectionFetching }) => {
 
 	useEffect(() => {
-		if (isCollectionFetching) fetchCollectionsStartAsync();
-	}, [isCollectionFetching, fetchCollectionsStartAsync]);
+		if (isCollectionFetching) fetchCollections();
+	}, [isCollectionFetching, fetchCollections]);
 
-  if(isCollectionFetching) return <h1>loading</h1>
+	if (isCollectionFetching) return <h1>loading</h1>;
 
 	return (
 		<CollectionPageContainer>
@@ -39,8 +28,4 @@ const CollectionPage = ({ fetchCollectionsStartAsync }) => {
 	);
 };
 
-const mapDispatchToProps = (dispatch) => ({
-	fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
-});
-
-export default connect(null, mapDispatchToProps)(CollectionPage);
+export default CollectionPage;

@@ -16,8 +16,8 @@ import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import ProtectedRoute from './components/protected-route/ProtectedRoute.component';
-import CollectionsOverview from './components/collections-overview/collections-overview.component';
-import CollectionPage from './pages/collection/collection.component';
+import CollectionsOverviewContainer from './components/collections-overview/collections-overview.container';
+import CollectionContainer from './pages/collection/collection.container';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -52,10 +52,10 @@ class App extends React.Component {
         <Routes>
           <Route exact path='/' element={<HomePage />} />
           <Route path='/shop'>
-            <Route index element={<CollectionsOverview />} />
+            <Route index element={<CollectionsOverviewContainer />} />
             <Route
               path={`:collectionId`}
-              element={<CollectionPage />}
+              element={<CollectionContainer />}
             />
           </Route>
           <Route exact path='/checkout' element={<CheckoutPage />} />
